@@ -10,7 +10,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import proj4 from 'proj4';
 import { cellToBoundary, H3Index, latLngToCell } from 'h3-js';
 import * as L from 'leaflet';
-import { MapData } from '../../core/interfaces';
 
 @Component({
   selector: 'app-map',
@@ -23,19 +22,19 @@ import { MapData } from '../../core/interfaces';
 })
 export class MapComponent {
   private mapDataService = inject(MapDataService);
-  mapData = toSignal(this.mapDataService.getMapData());
+  private mapData = toSignal(this.mapDataService.getMapData());
   private map!: L.Map;
 
   constructor() {
     effect(() => {
       const data = this.mapData();
       if (data) {
-        this.initMap(data);
+        this.initMap();
       }
     });
   }
 
-  private initMap(data: MapData) {
+  private initMap() {
     this.map = L.map('map', {
       center: [40.95536, 21.42186],
       zoom: 6,
@@ -58,7 +57,7 @@ export class MapComponent {
     });
   }
 
-  renderHexagons() {
+  private renderHexagons() {
     const data = this.mapData();
     if (!data) return;
 
@@ -92,9 +91,10 @@ export class MapComponent {
           const polygon = L.polygon(
             hexBoundary.map(([lat, lng]) => [lat, lng]),
             {
-              color: '#000',
+              color: 'rgba(86, 86, 86, 0.4)',
               fillColor: '#' + feature.properties.COLOR_HEX,
-              fillOpacity: 0.5,
+              fillOpacity: 0.4,
+              className: 'hexagon',
             },
           );
           (polygon as any).hexLayer = true;
@@ -104,7 +104,7 @@ export class MapComponent {
     }
   }
 
-  getH3Resolution(zoom: number): number {
+  private getH3Resolution(zoom: number): number {
     if (zoom <= 4) return 3;
     if (zoom <= 7) return 4;
     if (zoom <= 10) return 5;

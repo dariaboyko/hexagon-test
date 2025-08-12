@@ -1,10 +1,10 @@
 export interface MapData {
-  type: 'FeatureCollection';
+  type: string;
   features: Feature[];
 }
 
 export interface Feature {
-  type: 'Feature';
+  type: string;
   properties: {
     COLOR_HEX: string;
     ID: number;
@@ -13,12 +13,12 @@ export interface Feature {
 }
 
 export interface Geometry {
-  type: 'MultiPolygon';
+  type: string;
   crs: {
     type: string;
     properties: {
       name: string;
     };
   };
-  coordinates: [number, number][][][]; // [polygons][rings][points][x|y]
+  coordinates: [number, number][][][];
 }
