@@ -20,5 +20,5 @@ export interface Geometry {
       name: string;
     };
   };
-  coordinates: number[][][][]; // [polygons][rings][points][x|y]
+  coordinates: [number, number][][][]; // [polygons][rings][points][x|y]
 }
