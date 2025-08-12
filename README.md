@@ -10,6 +10,12 @@ The libraries that were used:
 
 ## Development server
 
+Firstly, install dependencies:
+
+```bash
+npm install
+```
+
 To start a local development server, run:
 
 ```bash
